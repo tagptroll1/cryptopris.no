@@ -6,18 +6,17 @@
 		export let nextNumber = 0.0;
 		export let diff = 0;
 	
-		$: number = nextNumber.toFixed(3);
-		$: modulus = diff > 0 ? -1 : diff < 0 ? 1 : 0;
-		$: increment = diff > 0;
-		$: decrement = diff < 0;
+		$: modulus = diff > 0 ? 1 : diff < 0 ? -1 : 0;
+		$: increment = diff < 0;
+		$: decrement = diff > 0;
 		$: percent = diff.toFixed(3)
 		
 	</script>
 	
 	<div class="counter">
 		<div class="counter-viewport">
-			{#key modulus}
-				<div class="counter-digits" in:fly="{{ y: -100 * modulus, duration: 1000 }}" out:fly="{{ y: 100 * modulus, duration: 1000 }}">
+			{#key nextNumber}
+				<div class="counter-digits" in:fly="{{ y: -100 * modulus, duration: 150 }}" out:fly="{{ y: 100 * modulus, duration: 150 }}">
 					<strong class={increment ? 'increment' : decrement ? 'decrement' : ''}>
 						<div class={percent.endsWith("0.000") ? 'arrow' : 'arrow-percent'}>
 							{#if decrement}
@@ -31,7 +30,7 @@
 								</span>
 							{/if}
 						</div>
-						{number}
+						${nextNumber}
 					</strong>
 	
 				</div>
